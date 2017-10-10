@@ -12,4 +12,14 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  previewDocument(){
+    alert('Previsualizar');
+  }
+
+  downloadDocument(){
+    alert('Descargar');
+  }
+
+
+
 }
