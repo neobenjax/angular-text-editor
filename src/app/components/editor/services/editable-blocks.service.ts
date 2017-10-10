@@ -34,7 +34,6 @@ export class EditableBlocksService {
     if(placeholder === 'lorem')
       placeholderText = this.loremText;
     this.editableBlocks[sheet].push(placeholderText);
-    return {sheet:sheet,id:this.editableBlocks[sheet].length - 1}
   }
 
   addSheet(firstElement?: boolean){

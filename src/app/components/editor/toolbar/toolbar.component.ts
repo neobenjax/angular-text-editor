@@ -17,19 +17,19 @@ export class ToolbarComponent implements OnInit {
 
   addBlock(type?: string){
     let contentType = type || '';
-    let toSheet = this.editableBlocksService.blocks.length - 1;//Last page
-    let sH = this.editableBlocksService.sheetSize.height;
-    let uSH = this.editableBlocksService.sheetUsedHeight[toSheet];
-    let minHB = this.editableBlocksService.minHeightBlock;
-    if(contentType === 'lorem')
-      minHB = 135;
-
-    if( sH < ( uSH + minHB) ){
-      toSheet += 1; // Next existing page
-      if(!this.editableBlocksService.blocks[toSheet])
-        this.addSheet();
-    }
-    let dataLastBlock = this.editableBlocksService.addEditableBlock(toSheet,contentType);
+    // let toSheet = this.editableBlocksService.blocks.length - 1;//Last page
+    // let sH = this.editableBlocksService.sheetSize.height;
+    // let uSH = this.editableBlocksService.sheetUsedHeight[toSheet];
+    // let minHB = this.editableBlocksService.minHeightBlock;
+    // if(contentType === 'lorem')
+    //   minHB = 135;
+    //
+    // if( sH < ( uSH + minHB) ){
+    //   toSheet += 1; // Next existing page
+    //   if(!this.editableBlocksService.blocks[toSheet])
+    //     this.addSheet();
+    // }
+    let dataLastBlock = this.editableBlocksService.addEditableBlock(0,contentType);
     // setTimeout(()=>{
     //   let toTop = $(`#sheet_${dataLastBlock.sheet}_edit_${dataLastBlock.id}`).offset().top - 20;
     //   console.log(toTop);
