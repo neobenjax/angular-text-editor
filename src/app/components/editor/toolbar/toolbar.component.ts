@@ -21,19 +21,20 @@ export class ToolbarComponent implements OnInit {
     let sH = this.editableBlocksService.sheetSize.height;
     let uSH = this.editableBlocksService.sheetUsedHeight[toSheet];
     let minHB = this.editableBlocksService.minHeightBlock;
+    if(contentType === 'lorem')
+      minHB = 135;
 
-    // console.log(this.editableBlocksService.sheetSize);
-    // console.log('Sheet used height',this.editableBlocksService.sheetUsedHeight[toSheet]);
     if( sH < ( uSH + minHB) ){
       toSheet += 1; // Next existing page
-      if(!this.editableBlocksService.blocks[toSheet]){
-        // console.log('No existe, agregamos hoja: '+toSheet);
+      if(!this.editableBlocksService.blocks[toSheet])
         this.addSheet();
-      }
-      // console.log(this.editableBlocksService.blocks[toSheet]);
     }
-    console.log(this.editableBlocksService.addEditableBlock(toSheet,contentType));
-    $('#hojaApp').animate({ scrollTop: 200 }, 100);
+    let dataLastBlock = this.editableBlocksService.addEditableBlock(toSheet,contentType);
+    // setTimeout(()=>{
+    //   let toTop = $(`#sheet_${dataLastBlock.sheet}_edit_${dataLastBlock.id}`).offset().top - 20;
+    //   console.log(toTop);
+    //   $('#hojaApp').animate({ scrollTop: toTop }, 400);
+    // },100);
   }
 
   addSheet(){
