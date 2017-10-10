@@ -5,17 +5,11 @@ export class EditableBlocksService {
 
   private editableBlocks = [
     [
-      '<p>Contenido 1 from service page 1</p>',
-      '<p>Contenido 2 from service page 1</p>',
-      '<p>Contenido 3 from service page 1</p>',
-      '<p>Contenido 4 from service page 1</p>'
-    ],
-    // [
-    //   '<p>Contenido 1 from service page 2</p>',
-    //   '<p>Contenido 2 from service page 2</p>',
-    //   '<p>Contenido 3 from service page 2</p>',
-    //   '<p>Contenido 4 from service page 2</p>'
-    // ]
+      '<p>Contenido 1 from service</p>',
+      '<p>Contenido 2 from service</p>',
+      '<p>Contenido 3 from service</p>',
+      '<p>Contenido 4 from service</p>'
+    ]
   ];
 
   private loremText = 'Lorem ipsum dolor sit amet, <b>consectetur adipisicing elit</b>, sed do eiusmod tempor <i>incididunt</i> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est <em>laborum</em>.';

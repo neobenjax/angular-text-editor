@@ -1,13 +1,14 @@
 .contenedor-hoja {
-  margin: 30px auto;
+  margin: 20px auto 30px;
   position: relative;
+  overflow: hidden;
+  padding-top: 10px;
 }
 
 div.hoja {
 
     background: #fff;
     width: 21cm;
-    min-height: 29.7cm;
     height: 29.7cm;
     display: block;
     margin: 0 auto;
@@ -20,12 +21,16 @@ div.hoja {
     position: relative;
     zoom: .8;
     font-family: Arial,Lucida Grande,sans-serif;
+    &.loaded{
+      min-height: 29.7cm;
+      height: auto;
+    }
 
     .inner-hoja {
 
       height: 100%;
-      overflow: hidden;
-      padding: 10px 0;
+      // overflow: hidden;
+      // padding: 10px 0;
 
       div.block{
 
@@ -67,6 +72,29 @@ div.hoja {
         }
 
       }
+
+      .page-break {
+
+          width: 100%;
+          position: absolute;
+          height: 1px;
+          border: 1px dashed #929292;
+          left: 0px;
+          right: 0;
+          text-align: left;
+          color: #080808;
+          font-size: 11px;
+          margin-top: 1.5cm;
+          opacity: 0.5;
+          span {
+            position: absolute;
+            top: 50%;
+            left: 0px;
+            display: block;
+          }
+
+      }
+
 
     }
 

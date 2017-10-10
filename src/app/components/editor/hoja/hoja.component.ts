@@ -17,6 +17,9 @@ export class HojaComponent implements OnInit {
   public editableBlocks = [];
   public activeBlock: number = -1;
   public activeSheet: number = -1;
+  public pageCounter: number = 1;
+  public pageHeight: number = 1;
+  public pageLoaded: boolean = false;
 
   constructor(private editableBlocksService: EditableBlocksService,
               private sanitizer: DomSanitizer) { }
@@ -39,6 +42,7 @@ export class HojaComponent implements OnInit {
     // }
     this.editorConfig = {
       minHeight: 100,
+      tooltip: false,
       toolbar: [
         // [groupName, [list of button]]
         ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -59,10 +63,15 @@ export class HojaComponent implements OnInit {
       width: document.getElementById('innerSheet_0').offsetWidth,
       height:document.getElementById('innerSheet_0').offsetHeight
     }
+    setTimeout(()=>{
+      this.pageHeight = this.editableBlocksService.sheetSize.height;
+      this.pageLoaded = true;
+    },100);
   }
 
   ngAfterViewChecked(){
-    this.updatePagesContent();
+    // this.updatePagesContent();
+    this.setPageBrakes();
   }
 
   ngDoCheck() {
@@ -122,6 +131,14 @@ export class HojaComponent implements OnInit {
         // console.log(this.editableBlocksService.sheetUsedHeight);
         // console.log('Pagina '+ i + ' | Altura total:' + pageHAdded);
       }
+    }
+  }
+
+  public setPageBrakes(){
+    if(document.getElementById('innerSheet_0').offsetHeight > this.editableBlocksService.sheetSize.height * this.pageCounter){
+      setTimeout(()=>{
+        this.pageCounter += 1;
+      },100);
     }
   }
 

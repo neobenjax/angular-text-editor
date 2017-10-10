@@ -1,5 +1,5 @@
 <div class="contenedor-hoja" (click)="saveOpenEditable($event)" id="sheetsContainer">
-  <div class="hoja" [id]="'sheet_'+s" *ngFor="let sheet of editableBlocks; let s=index">
+  <div class="hoja" [id]="'sheet_'+s" *ngFor="let sheet of editableBlocks; let s=index" [class.loaded]="pageLoaded">
     <div class="inner-hoja" [id]="'innerSheet_'+s">
 
       <div class="block" *ngFor="let editable of sheet; let ed=index" [class.active]="i===activeBlock">
@@ -11,6 +11,9 @@
         </button>
       </div>
 
+      <div class="page-break" [style.top]="(pageHeight*page)+'px'" *ngFor="let page of pageCounter | times">
+        <span>Página {{page}}</span>
+      </div>
     </div>
   </div>
 </div>
