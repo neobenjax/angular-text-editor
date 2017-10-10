@@ -1,12 +1,19 @@
 .contenido-header {
     padding: 20px;
-    text-align: center;
-    background-color: #e6e6e6;
+    text-align: left;
+    background-color: #f3f3f4;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
     h1.titulo {
       text-transform: uppercase;
       font-weight: 600;
       font-size: 25px;
       margin: 0;
+      color: #ed6811;
+      line-height: 25px;
+      span{
+        display: inline-block;
+        margin-right: 10px;
+        vertical-align: top;
+      }
     }
 }

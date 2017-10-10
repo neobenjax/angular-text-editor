@@ -7,7 +7,8 @@
   app-toolbar {
     width: 250px;
     overflow-y: auto;
-    background: #344e5b;
+    background: #fff;
+    box-shadow: 2px 0px 5px 0 rgba(0, 0, 0, 0.26);
   }
   app-hoja {
     width: calc(100vw - 500px);
@@ -16,6 +17,6 @@
   app-estructura {
     width: 250px;
     overflow-y: auto;
-    background: #344e5b;
+    background: #fff;
   }
 }

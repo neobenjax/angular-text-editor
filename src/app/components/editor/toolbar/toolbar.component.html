@@ -6,10 +6,26 @@
         <span class="hint-text">Agregue elementos nuevos o predefinidos</span>
       </p>
       <ul class="herramientas">
-        <li><button (click)="addBlock()">Agregar texto</button></li>
-        <li><button (click)="addBlock('signers')">Agregar firmantes</button></li>
-        <li><button (click)="addBlock('declaration')">Agregar declaración</button></li>
-        <li><button (click)="addBlock('lorem')">Agregar Lorem</button></li>
+        <li>
+          <button (click)="addBlock()">
+            <span class="glyphicon glyphicon-pencil"></span> Agregar texto
+          </button>
+        </li>
+        <li>
+          <button (click)="addBlock('signers')">
+            <span class="glyphicon glyphicon-leaf"></span> Agregar firmantes
+          </button>
+        </li>
+        <li>
+          <button (click)="addBlock('declaration')">
+            <span class="glyphicon glyphicon-list-alt"></span> Agregar declaración
+          </button>
+        </li>
+        <li>
+          <button (click)="addBlock('lorem')">
+            <span class="glyphicon glyphicon-file"></span> Agregar Lorem
+          </button>
+        </li>
       </ul>
     </div>
   </div>

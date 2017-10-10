@@ -5,10 +5,7 @@ export class EditableBlocksService {
 
   private editableBlocks = [
     [
-      '<p>Contenido 1 from service</p>',
-      '<p>Contenido 2 from service</p>',
-      '<p>Contenido 3 from service</p>',
-      '<p>Contenido 4 from service</p>'
+      '<p>Comience a escribir aquí</p>',
     ]
   ];
 
@@ -50,7 +47,7 @@ export class EditableBlocksService {
 
   removeEditableBlock(sheet: number, index: number){
     this.editableBlocks[sheet].splice(index,1);
-    if(this.editableBlocks[sheet].length < 1 )
+    if(this.editableBlocks[sheet].length < 1 && this.editableBlocks.length > 1)
       this.removeSheet(sheet);
   }
 
