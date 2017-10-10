@@ -1,0 +1,17 @@
+<div class="contenido-estructura">
+  <div class="inner">
+    <p class="titulo-estructura">
+      Árbol del documento
+    </p>
+    <div class="bloque-por-hoja" [id]="'sheet_'+s" *ngFor="let sheet of editableBlocks; let s=index">
+      <p class="hoja-separador">Hoja {{s+1}}</p>
+      <ul class="elementos" dnd-sortable-container [sortableData]="sheet">
+        <li *ngFor="let block of sheet; let i=index;"
+            dnd-sortable [sortableIndex]="i" (onDropSuccess)="reOrderSuccess($event)">
+          <span>{{i+1}}</span>
+          <div [innerHTML]="block" class="content"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

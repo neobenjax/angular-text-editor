@@ -1,0 +1,37 @@
+.contenido-tools{
+  height: 100%;
+  padding: 30px 20px;
+  color:#fff;
+}
+
+.bloque-tool {
+
+    font-size: 14px;
+    p.titulo-bloque {
+      font-weight: bold;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #fff;
+      span.hint-text {
+        display: block;
+        font-size: 10px;
+      }
+    }
+
+    ul.herramientas {
+      list-style: none;
+      li {
+        margin-bottom: 10px;
+        button {
+          border: 1px solid #fff;
+          background: none;
+          font-weight: bold;
+          width: 100%;
+          text-align: left;
+          padding: 6px 10px;
+          box-shadow: 2px 2px 2px rgba(255,255,255,0.5);
+        }
+      }
+    }
+
+}

@@ -1,0 +1,16 @@
+<div class="contenedor-hoja" (click)="saveOpenEditable($event)" id="sheetsContainer">
+  <div class="hoja" [id]="'sheet_'+s" *ngFor="let sheet of editableBlocks; let s=index">
+    <div class="inner-hoja" [id]="'innerSheet_'+s">
+
+      <div class="block" *ngFor="let editable of sheet; let ed=index" [class.active]="i===activeBlock">
+          <div class="editable-content" (click)="edit(s,ed,$event)" [id]="'sheet_'+s+'_edit_'+ed"
+          [innerHTML]="editable">
+        </div>
+        <button (click)="deleteBlock(s,ed)" type="button" class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
