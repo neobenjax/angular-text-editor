@@ -7,6 +7,11 @@
       </p>
       <ul class="herramientas">
         <li>
+          <button (click)="addBlock('header')">
+            <span class="glyphicon glyphicon-header"></span> Agregar header
+          </button>
+        </li>
+        <li>
           <button (click)="addBlock()">
             <span class="glyphicon glyphicon-pencil"></span> Agregar texto
           </button>
@@ -25,7 +30,7 @@
               <li *ngFor="let signer of signers;let i=index;">
                 <input type="checkbox" [id]="'firmante'+i" [value]="signer.id"
                        (change)="addRemoveSignerToDoc(i)" [checked]="checkSigners[i]">
-                <label [for]="'firmante'+i">{{signer.name}}</label>
+                <label [for]="'firmante'+i">{{signer.alias}}</label>
               </li>
             </ul>
             <button (click)="addSelectedToDoc()" [disabled]="selectedSigners.length < 1">Agregrar seleccionados</button>

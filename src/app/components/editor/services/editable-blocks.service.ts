@@ -58,10 +58,18 @@ export class EditableBlocksService {
         for(let signer of this.docVarsService.signersToDoc){
           placeholderElement.content += `<div class="signerSpace signer_${signer.id}" data-id="${signer.id}">
                                           <div class="espacioFirma"></div>
-                                          <div class="nombreFirmante">${signer.name}</div>
+                                          <div class="nombreFirmante">${signer.alias}</div>
                                          </div>`;
         }
       break;
+      case 'header':
+        placeholderElement.type = 'header';
+        placeholderElement.content =
+          `En __________________, siendo los __ días del mes de __________ de _____, se celebra el presente
+          Contrato de Compraventa entre __________________________, como Vendedor, y
+          __________________________, como Comprador, respecto del inmueble que se describe a
+          continuación, de conformidad con lo siguiente:
+          `
     }
     // placeholderElement = this.sanitizer.bypassSecurityTrustHtml(placeholderElement).toString();
     this.editableBlocks[sheet].push(placeholderElement);

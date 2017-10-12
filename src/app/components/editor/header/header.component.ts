@@ -24,15 +24,24 @@ export class HeaderComponent implements OnInit {
 
   previewDocument(){
     this.inPreviewMode = this.docVarsService.inPreviewMode
+    // $(element).position().top / $('.hoja').height() * 100
     if(!this.inPreviewMode){
       let coordinates = [];
       $('.signerSpace').each(function(){
         let parentPos = $(this).closest('.block').position();
         let signerPos = $(this).position();
         let signerId = $(this).data('id');
+        // let topPercentage = (parentPos.top+signerPos.top) / $('.hoja').height() * 100+'%';
+        // let leftPercentage = (parentPos.left+signerPos.left) / $('.hoja').width() * 100+'%';
+        // topPercentage = parentPos.top+signerPos.top+'px';
+        // leftPercentage = parentPos.left+signerPos.left+'px';
+        let topPercentage = parentPos.top / $('.hoja').outerHeight() * 100;
+        let leftPercentage = parentPos.left / $('.hoja').outerWidth() * 100;
+        topPercentage += signerPos.top / $('.hoja').outerHeight() * 100;
+        leftPercentage += signerPos.left / $('.hoja').outerWidth() * 100;
         coordinates.push({
-          top:parentPos.top+signerPos.top+'px',
-          left:parentPos.left+signerPos.left+'px',
+          top:topPercentage+'%',
+          left:leftPercentage+'%',
           idSigner:signerId
         });
       });

@@ -17,19 +17,23 @@ export class DocVarsService {
     this.signers = [
       {
         id:0,
-        name:'La parte'
+        name:'Benjamín Sánchez',
+        alias:'La parte'
       },
       {
         id:1,
-        name:'La contra-parte'
+        name:'Alfredo Villanueva',
+        alias:'La contra-parte'
       },
       {
         id:2,
-        name:'Testigo 1'
+        name:'Angel Herrera',
+        alias:'Testigo 1'
       },
       {
         id:3,
-        name:'Testigo 2'
+        name:'Roberto Carrera',
+        alias:'Testigo 2'
       }
     ]
     this.signersToDoc = [];

@@ -102,7 +102,7 @@ div.hoja {
     }
 
     &.inPreview{
-      zoom: 1;
+      // zoom: 1;
       .inner-hoja{
 
         div.block{
@@ -114,7 +114,7 @@ div.hoja {
           }
 
           .editable-content{
-            border: none;
+            border: 1px solid rgba(0,0,0,0);
             border-radius: 0px;
             cursor: default;
           }
@@ -130,8 +130,9 @@ div.hoja {
 .map-area{
   border:1px solid #f00;
   position: absolute;
-  width: 220px;
+  width: 25%;
   height:70px;
+  height: 5%;
   top:0;
   left:0;
   margin-top: 0px;

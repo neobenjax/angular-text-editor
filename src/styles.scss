@@ -23,12 +23,13 @@ html, body{
     pointer-events: none;
   }
   ul,ol{
-    padding-left: 20px;
+    padding-left: 20px!important;
   }
 }
 div.signerSpace {
   display: inline-block;
-  width: 220px;
+  // width: 220px;
+  width: 30%;
   margin: 0 20px 10px;
   text-align: center;
   &:nth-last-child(1),&:nth-last-child(2){

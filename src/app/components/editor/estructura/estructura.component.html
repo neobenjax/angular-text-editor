@@ -12,6 +12,7 @@
             {{i+1}}
           </span>
           <ng-container [ngSwitch]="block.type">
+            <div class="content" *ngSwitchCase="'header'">Header</div>
             <div class="content" *ngSwitchCase="'signers'">Área de Firmantes</div>
             <div class="content" *ngSwitchCase="'space'">[ESPACIO]</div>
             <div class="content" *ngSwitchCase="'lorem'">Lorem</div>
