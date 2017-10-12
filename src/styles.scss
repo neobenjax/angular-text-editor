@@ -26,6 +26,31 @@ html, body{
     padding-left: 20px;
   }
 }
+div.signerSpace {
+  display: inline-block;
+  width: 220px;
+  margin: 0 20px 10px;
+  text-align: center;
+  &:nth-last-child(1),&:nth-last-child(2){
+    margin-bottom: 0;
+  }
+  .espacioFirma {
+    border-bottom: 1px solid #000;
+    height: 35px;
+    position: relative;
+    &:before, &:after {
+      position: absolute;
+    }
+    &:before {
+      content: '[';
+      left: 0;
+    }
+    &:after {
+      content: ']';
+      right: 0;
+    }
+  }
+}
 .note-editable{
   ul,ol{
     padding-left: 20px;

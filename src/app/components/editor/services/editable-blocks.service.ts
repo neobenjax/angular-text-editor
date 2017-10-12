@@ -1,15 +1,27 @@
 import { Injectable } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { DocVarsService } from '../services/doc-vars.service';
 
 @Injectable()
 export class EditableBlocksService {
 
   private editableBlocks = [
     [
-      '<p>Comience a escribir aquí</p>',
+      {
+        type:'simpleBlock',
+        content:'<p>Comience a escribir aquí</p>'
+      },
     ]
   ];
 
-  private loremText = 'Lorem ipsum dolor sit amet, <b>consectetur adipisicing elit</b>, sed do eiusmod tempor <i>incididunt</i> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est <em>laborum</em>.';
+  private loremText = {
+    type:'lorem',
+    content:'Lorem ipsum <span style="font-size: 24px;">dolor sit amet</span>, <b>consectetur adipisicing elit</b>, sed do eiusmod tempor <i>incididunt</i> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est <em>laborum</em>.'
+  };
+  private space = {
+    type:'space',
+    content:'<p><br></p>'
+  };
 
   public minHeightBlock: number;
   public sheetUsedHeight: number[] = [];
@@ -18,7 +30,8 @@ export class EditableBlocksService {
     height:0
   }
 
-  constructor() {
+  constructor(private sanitizer: DomSanitizer,
+              private docVarsService: DocVarsService) {
     this.minHeightBlock = 50;
   }
 
@@ -27,10 +40,31 @@ export class EditableBlocksService {
   }
 
   addEditableBlock(sheet: number, placeholder?: string){
-    let placeholderText = placeholder || '<p>Nuevo elemento</p>';
-    if(placeholder === 'lorem')
-      placeholderText = this.loremText;
-    this.editableBlocks[sheet].push(placeholderText);
+    let placeholderElement = {
+      type:'simpleBlock',
+      content: placeholder || '<p>Escriba aquí</p>'
+    };
+
+    switch(placeholder){
+      case 'lorem':
+        placeholderElement = this.loremText;
+      break;
+      case 'space':
+        placeholderElement = this.space;
+      break;
+      case 'signers':
+        placeholderElement.type = 'signers';
+        placeholderElement.content = '';
+        for(let signer of this.docVarsService.signersToDoc){
+          placeholderElement.content += `<div class="signerSpace" id="signer_${signer.id}">
+                                          <div class="espacioFirma"></div>
+                                          <div class="nombreFirmante">${signer.name}</div>
+                                         </div>`;
+        }
+      break;
+    }
+    // placeholderElement = this.sanitizer.bypassSecurityTrustHtml(placeholderElement).toString();
+    this.editableBlocks[sheet].push(placeholderElement);
   }
 
   addSheet(firstElement?: boolean){
@@ -42,7 +76,7 @@ export class EditableBlocksService {
   }
 
   saveEditableBlock(sheet: number, index: number, blockContent: any){
-    this.editableBlocks[sheet][index] = blockContent;
+    this.editableBlocks[sheet][index].content = blockContent;
   }
 
   removeEditableBlock(sheet: number, index: number){

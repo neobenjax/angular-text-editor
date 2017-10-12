@@ -3,8 +3,8 @@
     <div class="inner-hoja" [id]="'innerSheet_'+s">
 
       <div class="block" *ngFor="let editable of sheet; let ed=index" [class.active]="i===activeBlock">
-          <div class="editable-content" (click)="edit(s,ed,$event)" [id]="'sheet_'+s+'_edit_'+ed"
-          [innerHTML]="editable">
+          <div class="editable-content {{editable.type}}" (click)="edit(s,ed,$event)" [id]="'sheet_'+s+'_edit_'+ed"
+          [innerHTML]="editable.content | safeHtml">
         </div>
         <button (click)="deleteBlock(s,ed)" type="button" class="close" aria-label="Close">
           <span aria-hidden="true">&times;</span>

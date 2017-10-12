@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EditableBlocksService } from '../services/editable-blocks.service';
+import { EditableBlocksService, DocVarsService } from '../services';
 import { DomSanitizer } from '@angular/platform-browser';
 
 declare var $:any;
@@ -20,6 +20,7 @@ export class HojaComponent implements OnInit {
   public pageCounter: number = 1;
   public pageHeight: number = 1;
   public pageLoaded: boolean = false;
+  public isImageSelecting: boolean = false;
 
   constructor(private editableBlocksService: EditableBlocksService,
               private sanitizer: DomSanitizer) { }
@@ -51,8 +52,16 @@ export class HojaComponent implements OnInit {
         ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph']],
         ['height', ['height']],
-        ['custom', ['deleteBtn']]
-      ]
+        ['image', ['picture']]
+      ],
+      callbacks: {
+        onChange: function(contents, $editable) {
+          // console.log('onChange:', contents, $editable);
+        },
+        onFocus: () => {
+          this.isImageSelecting = false;
+        }
+      }
     };
 
     this.editableBlocks = this.editableBlocksService.blocks;
@@ -63,6 +72,9 @@ export class HojaComponent implements OnInit {
       width: document.getElementById('innerSheet_0').offsetWidth,
       height:document.getElementById('innerSheet_0').offsetHeight
     }
+    $(document).on('click','.note-image',()=>{
+      this.isImageSelecting = true;
+    });
     setTimeout(()=>{
       this.pageHeight = this.editableBlocksService.sheetSize.height;
       this.pageLoaded = true;
@@ -83,11 +95,13 @@ export class HojaComponent implements OnInit {
     }
     this.editorConfig.focus = true;
     let selector = event.target.id;
-    $('#'+selector).summernote(this.editorConfig);
-    this.openEditorId = selector;
-    this.editorIsOpen = true;
-    this.activeSheet = sheet;
-    this.activeBlock = index;
+    if(!$('#'+selector).hasClass('signers')){
+      $('#'+selector).summernote(this.editorConfig);
+      this.openEditorId = selector;
+      this.editorIsOpen = true;
+      this.activeSheet = sheet;
+      this.activeBlock = index;
+    }
   }
 
   public saveOpenEditable(event){
@@ -96,7 +110,10 @@ export class HojaComponent implements OnInit {
         !$(event.target).hasClass('note-toolbar') &&
         !$(event.target).hasClass('note-editable') &&
         $(event.target).closest('.note-toolbar').length === 0 &&
-        $(event.target).closest('.note-editable').length === 0
+        $(event.target).closest('.note-editable').length === 0 &&
+        !this.isImageSelecting &&
+        $(event.target).closest('.note-handle').length === 0 &&
+        $(event.target).closest('.note-editing-area').length === 0
       ){
       if(this.editorIsOpen){
         this.save();
@@ -106,9 +123,11 @@ export class HojaComponent implements OnInit {
 
   public save(){
     let markup = $('#'+this.openEditorId).summernote('code');
-    let cleanMarkup = this.sanitizer.bypassSecurityTrustHtml(markup);
+    // console.log(markup);
+    // let cleanMarkup = this.sanitizer.bypassSecurityTrustHtml(markup);
+    // console.log(cleanMarkup);
     if(this.activeBlock !== -1 || this.activeSheet !==-1)
-      this.editableBlocksService.saveEditableBlock(this.activeSheet, this.activeBlock, cleanMarkup);
+      this.editableBlocksService.saveEditableBlock(this.activeSheet, this.activeBlock, markup);
     $('#'+this.openEditorId).summernote('destroy');
     // console.log(this.openEditorId+' | ',$('#'+this.openEditorId).parent().height());
     this.activeBlock = -1;

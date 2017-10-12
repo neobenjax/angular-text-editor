@@ -8,13 +8,29 @@
       <ul class="herramientas">
         <li>
           <button (click)="addBlock()">
-            <span class="glyphicon glyphicon-pencil"></span> Agregar texto
+            <span class="glyphicon glyphicon-object-align-left"></span> Agregar texto
           </button>
         </li>
         <li>
-          <button (click)="addBlock('signers')">
+          <button (click)="addBlock('space')">
+            <span class="glyphicon glyphicon-pencil"></span> Agregar espacio
+          </button>
+        </li>
+        <li>
+          <button data-toggle="collapse" data-target="#firmantes">
             <span class="glyphicon glyphicon-leaf"></span> Agregar firmantes
           </button>
+          <div id="firmantes" class="collapse inner-opt">
+            <ul>
+              <li *ngFor="let signer of signers;let i=index;">
+                <input type="checkbox" [id]="'firmante'+i" [value]="signer.id"
+                       (change)="addRemoveSignerToDoc(i)" [checked]="checkSigners[i]">
+                <label [for]="'firmante'+i">{{signer.name}}</label>
+              </li>
+            </ul>
+            <button (click)="addSelectedToDoc()" [disabled]="selectedSigners.length < 1">Agregrar seleccionados</button>
+            <button (click)="addAllToDoc()">Agregra todos</button>
+          </div>
         </li>
         <li>
           <button (click)="addBlock('declaration')">

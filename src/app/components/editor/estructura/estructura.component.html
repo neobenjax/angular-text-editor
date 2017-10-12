@@ -7,8 +7,16 @@
       <ul class="elementos" dnd-sortable-container [sortableData]="sheet">
         <li *ngFor="let block of sheet; let i=index;"
             dnd-sortable [sortableIndex]="i" (onDropSuccess)="reOrderSuccess($event)">
-          <span>{{i+1}}</span>
-          <div [innerHTML]="block" class="content"></div>
+          <span>
+            <i class="glyphicon glyphicon-menu-hamburger"></i>
+            {{i+1}}
+          </span>
+          <ng-container [ngSwitch]="block.type">
+            <div class="content" *ngSwitchCase="'signers'">Área de Firmantes</div>
+            <div class="content" *ngSwitchCase="'space'">[ESPACIO]</div>
+            <div class="content" *ngSwitchCase="'lorem'">Lorem</div>
+            <div [innerHTML]="block.content" class="content" *ngSwitchDefault>...</div>
+          </ng-container>
         </li>
       </ul>
     </div>

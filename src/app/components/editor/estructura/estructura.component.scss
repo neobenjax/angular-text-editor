@@ -31,11 +31,16 @@ p.titulo-estructura {
         display: block;
         width: 25px;
         position: relative;
-        &:after {
-          content: ']';
-          position: absolute;
-          right: 0;
+        i{
+          display: inline-block;
+          margin-right: 3px;
+          vertical-align: baseline;
         }
+        // &:after {
+        //   content: ']';
+        //   position: absolute;
+        //   right: 0;
+        // }
       }
       div.content {
         white-space: nowrap;

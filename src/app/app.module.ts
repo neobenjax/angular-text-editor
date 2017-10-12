@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgSwitch } from '@angular/common';
 import { DndModule } from 'ng2-dnd';
 
 import { AppComponent } from './app.component';
@@ -10,8 +11,9 @@ import { ToolbarComponent } from './components/editor/toolbar/toolbar.component'
 import { EstructuraComponent } from './components/editor/estructura/estructura.component';
 
 //Service
-import { EditableBlocksService } from './components/editor/services/editable-blocks.service';
+import { EditableBlocksService, DocVarsService } from './components/editor/services';
 import { TimesPipe } from './pipes/times.pipe';
+import { SafePipe } from './pipes/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -21,14 +23,17 @@ import { TimesPipe } from './pipes/times.pipe';
     HeaderComponent,
     ToolbarComponent,
     EstructuraComponent,
-    TimesPipe
+    TimesPipe,
+    SafePipe
   ],
   imports: [
     BrowserModule,
     DndModule.forRoot()
   ],
   providers: [
-    EditableBlocksService
+    EditableBlocksService,
+    DocVarsService,
+    NgSwitch
   ],
   bootstrap: [AppComponent]
 })

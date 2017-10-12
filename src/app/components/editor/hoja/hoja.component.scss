@@ -69,6 +69,9 @@ div.hoja {
           border-radius: 5px;
           padding: 10px;
           cursor: pointer;
+          &.signers{
+            text-align: center;
+          }
         }
 
       }

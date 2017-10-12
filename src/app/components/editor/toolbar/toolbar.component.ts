@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EditableBlocksService } from '../services/editable-blocks.service';
+import { EditableBlocksService, DocVarsService } from '../services';
+import { Signer } from '../interfaces';
+import { NgModel } from '@angular/forms';
 
 declare var $: any;
 
@@ -10,35 +12,54 @@ declare var $: any;
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(private editableBlocksService: EditableBlocksService) { }
+  public signers: Signer[];
+  public selectedSigners: Signer[];
+  public checkSigners: boolean[] = [];
+
+  constructor(private editableBlocksService: EditableBlocksService,
+              private docVarsService: DocVarsService) { }
 
   ngOnInit() {
+    this.signers = this.docVarsService.signersList;
+    this.selectedSigners = this.docVarsService.signersToDoc;
+    for(let signer of this.signers){
+      this.checkSigners.push(false);
+    }
   }
 
   addBlock(type?: string){
     let contentType = type || '';
-    // let toSheet = this.editableBlocksService.blocks.length - 1;//Last page
-    // let sH = this.editableBlocksService.sheetSize.height;
-    // let uSH = this.editableBlocksService.sheetUsedHeight[toSheet];
-    // let minHB = this.editableBlocksService.minHeightBlock;
-    // if(contentType === 'lorem')
-    //   minHB = 135;
-    //
-    // if( sH < ( uSH + minHB) ){
-    //   toSheet += 1; // Next existing page
-    //   if(!this.editableBlocksService.blocks[toSheet])
-    //     this.addSheet();
-    // }
     let dataLastBlock = this.editableBlocksService.addEditableBlock(0,contentType);
-    // setTimeout(()=>{
-    //   let toTop = $(`#sheet_${dataLastBlock.sheet}_edit_${dataLastBlock.id}`).offset().top - 20;
-    //   console.log(toTop);
-    //   $('#hojaApp').animate({ scrollTop: toTop }, 400);
-    // },100);
   }
 
   addSheet(){
     this.editableBlocksService.addSheet();
+  }
+
+  addRemoveSignerToDoc(index: number){
+    let signer: Signer = this.signers[index];
+    let signIndex = this.selectedSigners.indexOf(signer);
+
+    this.checkSigners[index] = this.checkSigners[index] ? false : true;
+
+    if(signIndex !== -1)
+      this.selectedSigners.splice(signIndex, 1);
+    else
+      this.selectedSigners.push(signer);
+
+  }
+
+  addSelectedToDoc(){
+    this.editableBlocksService.addEditableBlock(0,'signers');
+  }
+
+  addAllToDoc(){
+    this.selectedSigners.length = 0;
+    for(let i=0,n = this.checkSigners.length; i<n; i++){
+      this.selectedSigners.push(this.signers[i]);
+      this.checkSigners[i] = true;
+    }
+    this.editableBlocksService.addEditableBlock(0,'signers');
   }
 
 }

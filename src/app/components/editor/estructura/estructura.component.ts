@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EditableBlocksService } from '../services/editable-blocks.service';
 
+
 declare var $: any;
 @Component({
   selector: 'app-estructura',
