@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EditableBlocksService, DocVarsService } from '../services';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subscription } from 'rxjs/Subscription';
 
 declare var $:any;
 
@@ -21,9 +22,13 @@ export class HojaComponent implements OnInit {
   public pageHeight: number = 1;
   public pageLoaded: boolean = false;
   public isImageSelecting: boolean = false;
+  public mapSigners = [];
+  public subscription: Subscription;
+  public previewMode: boolean = false;
 
   constructor(private editableBlocksService: EditableBlocksService,
-              private sanitizer: DomSanitizer) { }
+              private sanitizer: DomSanitizer,
+              private docVarsService: DocVarsService) { }
 
   ngOnInit() {
     // var deleteButton = function (context) {
@@ -65,6 +70,17 @@ export class HojaComponent implements OnInit {
     };
 
     this.editableBlocks = this.editableBlocksService.blocks;
+    this.mapSigners = this.docVarsService.mapSigners;
+
+    this.subscription = this.docVarsService.getPreviewMode()
+                          .subscribe( previewMode => {
+                            if(previewMode){
+                              if(this.editorIsOpen){
+                                this.save();
+                              }
+                            }
+                            this.previewMode = previewMode;
+                          });
   }
 
   ngAfterViewInit(){
@@ -90,18 +106,24 @@ export class HojaComponent implements OnInit {
   }
 
   public edit(sheet: number, index: number, event: any){
-    if(this.editorIsOpen){
-      this.save();
+
+    if(!this.previewMode){
+
+      if(this.editorIsOpen){
+        this.save();
+      }
+      this.editorConfig.focus = true;
+      let selector = event.target.id;
+      if(!$('#'+selector).hasClass('signers') && !$('#'+selector).hasClass('space')){
+        $('#'+selector).summernote(this.editorConfig);
+        this.openEditorId = selector;
+        this.editorIsOpen = true;
+        this.activeSheet = sheet;
+        this.activeBlock = index;
+      }
+
     }
-    this.editorConfig.focus = true;
-    let selector = event.target.id;
-    if(!$('#'+selector).hasClass('signers')){
-      $('#'+selector).summernote(this.editorConfig);
-      this.openEditorId = selector;
-      this.editorIsOpen = true;
-      this.activeSheet = sheet;
-      this.activeBlock = index;
-    }
+
   }
 
   public saveOpenEditable(event){
@@ -159,6 +181,11 @@ export class HojaComponent implements OnInit {
         this.pageCounter += 1;
       },100);
     }
+  }
+
+  ngOnDestroy() {
+    // unsubscribe to ensure no memory leaks
+    this.subscription.unsubscribe();
   }
 
 

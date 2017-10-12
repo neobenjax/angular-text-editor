@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Signer } from '../interfaces';
+import { Signer, Coordinates } from '../interfaces';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class DocVarsService {
 
   private signers: Signer[];
   public signersToDoc: Signer[];
+  public mapSigners = [];
+  public inPreviewMode = false;
+
+  private subject = new Subject<any>();
 
   constructor() {
     this.signers = [
@@ -50,6 +56,28 @@ export class DocVarsService {
 
   resetSignersToDoc(){
     this.signersToDoc = [];
+  }
+
+  generateMapsSigners(coordinates: Coordinates[]){
+    for(let coordinate of coordinates){
+      this.mapSigners.push({
+        top:coordinate.top,
+        left:coordinate.left,
+        idSigner:coordinate.idSigner
+      });
+    }
+  }
+  resetMapSigners(){
+    this.mapSigners.length = 0;
+  }
+
+  setPreviewMode(mode: boolean){
+    this.subject.next( mode );
+    this.inPreviewMode = mode;
+  }
+
+  getPreviewMode(): Observable<any> {
+    return this.subject.asObservable();
   }
 
 

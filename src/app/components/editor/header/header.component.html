@@ -1,13 +1,17 @@
 <div class="contenido-header">
   <h1 class="titulo">
     <span class="glyphicon glyphicon-edit"></span>
-    Editor de Contratos
+    Editor de Contratos {{inPreviewMode}}
   </h1>
   <div class="tools">
     <ul>
       <li>
-        <button title="Vista Previa" (click)="previewDocument()">
-          <span class="glyphicon glyphicon-eye-open"></span>
+        <button (click)="previewDocument()"
+                [title]="inPreviewMode ? 'Cerrar vista previa' : 'Vista previa'">
+          <span class="glyphicon"
+            [class.glyphicon-eye-open]="!inPreviewMode"
+            [class.glyphicon-eye-close]="inPreviewMode">
+          </span>
         </button>
       </li>
       <li>

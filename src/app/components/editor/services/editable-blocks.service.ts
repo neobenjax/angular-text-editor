@@ -56,7 +56,7 @@ export class EditableBlocksService {
         placeholderElement.type = 'signers';
         placeholderElement.content = '';
         for(let signer of this.docVarsService.signersToDoc){
-          placeholderElement.content += `<div class="signerSpace" id="signer_${signer.id}">
+          placeholderElement.content += `<div class="signerSpace signer_${signer.id}" data-id="${signer.id}">
                                           <div class="espacioFirma"></div>
                                           <div class="nombreFirmante">${signer.name}</div>
                                          </div>`;

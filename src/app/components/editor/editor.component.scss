@@ -20,4 +20,21 @@
     overflow-y: auto;
     background: #fff;
   }
+  app-toolbar, app-hoja, app-estructura{
+    transition: all 0.2s ease-out;
+  }
+  &.inPreview{
+    app-toolbar {
+      width: 0;
+      overflow: hidden;
+    }
+    app-estructura {
+      width: 0;
+      overflow: hidden;
+    }
+    app-hoja {
+      width: 100%;
+    }
+  }
+
 }

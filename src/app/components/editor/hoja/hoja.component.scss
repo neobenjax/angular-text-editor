@@ -101,5 +101,40 @@ div.hoja {
 
     }
 
+    &.inPreview{
+      zoom: 1;
+      .inner-hoja{
 
+        div.block{
+
+          &:hover{
+            > button{
+              display: none;
+            }
+          }
+
+          .editable-content{
+            border: none;
+            border-radius: 0px;
+            cursor: default;
+          }
+
+        }
+
+      }
+
+    }
+
+
+}
+.map-area{
+  border:1px solid #f00;
+  position: absolute;
+  width: 220px;
+  height:70px;
+  top:0;
+  left:0;
+  margin-top: 0px;
+  margin-left: 20px;
+  cursor: pointer;
 }
