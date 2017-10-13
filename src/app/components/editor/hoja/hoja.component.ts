@@ -57,7 +57,8 @@ export class HojaComponent implements OnInit {
         ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph']],
         ['height', ['height']],
-        ['image', ['picture']]
+        ['table', ['table']],
+        ['image', ['picture']],
       ],
       callbacks: {
         onChange: function(contents, $editable) {

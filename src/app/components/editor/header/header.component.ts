@@ -60,6 +60,21 @@ export class HeaderComponent implements OnInit {
     console.log('Data:',this.editableBlocks);
     console.log('DataString:',JSON.stringify(this.editableBlocks));
     // console.log('Html direct output',$('#innerSheet_0').find('.block').html());
+    let val = $('.hoja').html();
+
+    let file = new Blob([val], {
+      type: "text/html"
+    });
+    // file object reference
+    var download = URL.createObjectURL(file);
+    var a = document.createElement("a");
+    a.href = download;
+    a.download = "file-" + new Date().getTime();
+    document.body.appendChild(a);
+    a.click()
+    alert(download);
+    // window.open(download);
+    // window.open('http://localhost:4200/');
   }
 
 
