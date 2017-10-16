@@ -3,7 +3,7 @@
        *ngFor="let sheet of editableBlocks; let s=index">
     <div class="inner-hoja" [id]="'innerSheet_'+s">
 
-      <div class="block" *ngFor="let editable of sheet; let ed=index" [class.active]="i===activeBlock">
+      <div class="block" *ngFor="let editable of sheet; let ed=index" [class.active]="ed===activeBlock">
         <button (click)="deleteBlock(s,ed)" type="button" class="close" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -18,8 +18,10 @@
     </div>
     <ng-container *ngIf="mapSigners.length > 0">
       <div class="map-area" *ngFor="let mapSigner of mapSigners; let i=index"
-           [style.top]="mapSigner.top" [style.left]="mapSigner.left" [title]="mapSigner.idSigner">
+           [style.top]="mapSigner.top" [style.left]="mapSigner.left" [title]="mapSigner.idSigner"
+           [style.width]="mapSigner.width" [style.height]="mapSigner.height">
       </div>
     </ng-container>
   </div>
+  <canvas id="canvas" class="hoja"></canvas>
 </div>

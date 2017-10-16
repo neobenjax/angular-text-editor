@@ -5,7 +5,7 @@
   padding-top: 10px;
 }
 
-div.hoja {
+.hoja {
 
     background: #fff;
     width: 21cm;
@@ -31,12 +31,13 @@ div.hoja {
       height: 100%;
       overflow-x: hidden;
       // overflow: hidden;
-      // padding: 10px 0;
+      padding: 6px 0;
 
       div.block{
 
         margin-bottom: 10px;
         position: relative;
+        line-height: 24pt;
 
         > button{
           position: absolute;
@@ -131,8 +132,8 @@ div.hoja {
 .map-area{
   border:1px solid #f00;
   position: absolute;
-  width: 25%;
-  height:70px;
+  // width: 25%;
+  // height:70px;
   // height: 5%;
   top:0;
   left:0;

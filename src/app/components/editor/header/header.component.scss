@@ -17,6 +17,13 @@
           font-size: 18px;
           color: #ed6811;
         }
+        > a.downloadPDF{
+          font-size: 0;
+          width: 0;
+          height:0;
+          visibility: hidden;
+          display: inline-block;
+        }
       }
 
     }

@@ -20,7 +20,7 @@ export class EditableBlocksService {
   };
   private space = {
     type:'space',
-    content:'<p><br></p>'
+    content:'<p>&nbsp</p>'
   };
 
   public minHeightBlock: number;
@@ -53,14 +53,28 @@ export class EditableBlocksService {
         placeholderElement = this.space;
       break;
       case 'signers':
+        let byRow = 0;
         placeholderElement.type = 'signers';
-        placeholderElement.content = '';
-        for(let signer of this.docVarsService.signersToDoc){
-          placeholderElement.content += `<div class="signerSpace signer_${signer.id}" data-id="${signer.id}">
-                                          <div class="espacioFirma"></div>
-                                          <div class="nombreFirmante">${signer.alias}</div>
-                                         </div>`;
+        placeholderElement.content = '<table style="width: 100%;">';
+        for( let i = 0, n = this.docVarsService.signersToDoc.length; i < n; i++ ){
+          let signer = this.docVarsService.signersToDoc[i];
+          if(byRow === 0)
+            placeholderElement.content += '<tr>';
+          placeholderElement.content += `
+            <td>
+              <div class="signerSpace signer_${signer.id}" data-id="${signer.id}">
+                <p class="espacioFirma"></p>
+                <hr />
+                <p class="nombreFirmante">${signer.alias}</p>
+              </div>
+            </td>`;
+          byRow += 1;
+          if(byRow == 2){
+            placeholderElement.content += '</tr>';
+            byRow = 0;
+          }
         }
+        placeholderElement.content += '</table>'
       break;
       case 'header':
         placeholderElement.type = 'header';

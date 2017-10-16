@@ -67,6 +67,8 @@ export class DocVarsService {
       this.mapSigners.push({
         top:coordinate.top,
         left:coordinate.left,
+        width: coordinate.width,
+        height: coordinate.height,
         idSigner:coordinate.idSigner
       });
     }
