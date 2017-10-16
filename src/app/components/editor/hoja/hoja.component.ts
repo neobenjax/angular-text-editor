@@ -31,26 +31,10 @@ export class HojaComponent implements OnInit {
               private docVarsService: DocVarsService) { }
 
   ngOnInit() {
-    // var deleteButton = function (context) {
-    //   var ui = $.summernote.ui;
-    //   // create button
-    //   var button = ui.button({
-    //     contents: '<i class="fa fa-child"/> Borrar',
-    //     tooltip: 'Borrar bloque',
-    //     click: () => {
-    //       // invoke insertText method with 'hello' on editor module.
-    //       context.destroy();
-    //       context.invoke('editor.insertText', 'hello');
-    //     }
-    //   });
-    //
-    //   return button.render();   // return button as jquery object
-    // }
     this.editorConfig = {
       minHeight: 100,
       tooltip: false,
       toolbar: [
-        // [groupName, [list of button]]
         ['style', ['bold', 'italic', 'underline', 'clear']],
         ['font', ['strikethrough', 'superscript', 'subscript']],
         ['fontsize', ['fontsize']],
@@ -62,7 +46,6 @@ export class HojaComponent implements OnInit {
       ],
       callbacks: {
         onChange: function(contents, $editable) {
-          // console.log('onChange:', contents, $editable);
         },
         onFocus: () => {
           this.isImageSelecting = false;
@@ -99,7 +82,6 @@ export class HojaComponent implements OnInit {
   }
 
   ngAfterViewChecked(){
-    // this.updatePagesContent();
     this.setPageBrakes();
   }
 
@@ -146,13 +128,9 @@ export class HojaComponent implements OnInit {
 
   public save(){
     let markup = $('#'+this.openEditorId).summernote('code');
-    // console.log(markup);
-    // let cleanMarkup = this.sanitizer.bypassSecurityTrustHtml(markup);
-    // console.log(cleanMarkup);
     if(this.activeBlock !== -1 || this.activeSheet !==-1)
       this.editableBlocksService.saveEditableBlock(this.activeSheet, this.activeBlock, markup);
     $('#'+this.openEditorId).summernote('destroy');
-    // console.log(this.openEditorId+' | ',$('#'+this.openEditorId).parent().height());
     this.activeBlock = -1;
     this.activeSheet = -1;
   }
@@ -162,7 +140,6 @@ export class HojaComponent implements OnInit {
   }
 
   public updatePagesContent(){
-    // console.log(this.editableBlocksService.sheetSize.height);
     if(this.editableBlocksService.sheetSize.height > 0){
       for(let i=0, n = this.editableBlocks.length; i < n; i++){
         // let pageHAdded = 0;
@@ -170,8 +147,6 @@ export class HojaComponent implements OnInit {
         for(let j = 0, m = this.editableBlocks[i].length; j < m; j++){
           this.editableBlocksService.sheetUsedHeight[i] += document.getElementById(`sheet_${i}_edit_${j}`).offsetHeight + 10 //margin bottom
         }
-        // console.log(this.editableBlocksService.sheetUsedHeight);
-        // console.log('Pagina '+ i + ' | Altura total:' + pageHAdded);
       }
     }
   }

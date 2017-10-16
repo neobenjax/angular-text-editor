@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EditableBlocksService, DocVarsService, GeneratePdfService } from '../services';
 
 declare var $: any;
+declare var jQuery: any;
+declare var kendo:any;
 
 @Component({
   selector: 'app-header',
@@ -113,33 +115,57 @@ export class HeaderComponent implements OnInit {
 
     htmlString = htmlString.replace(/(\r\n|\n|\r)/gm,"");
 
-    console.log(htmlString);
+    // console.log(htmlString);
 
-    this.generatePdfService.getPDFFromHTML(htmlString).subscribe(pdfFile => {
+    setTimeout(()=>{
 
-      let blob = new Blob([pdfFile._body], {
-          type:'application/pdf'
+      kendo.drawing.drawDOM($(".hoja"))
+      .then(function(group) {
+        // Render the result as a PDF file
+        return kendo.drawing.exportPDF(group, {
+          // paperSize: "auto",
+          paperSize: "auto",
+          multiPage:true,
+          margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
+        });
+      })
+      .done(function(data) {
+        // Save the PDF file
+        kendo.saveAs({
+          dataURI: data,
+          fileName: "pdf.pdf",
+          proxyURL: ""
+        });
       });
 
-      if(navigator.msSaveBlob){
-        //Explorer
-        console.log('Explorer save blob');
-        navigator.msSaveBlob(blob,'contrato_xxx.pdf');
-      } else {
-        //Firefox / Chrome
-        var pdfLink = document.getElementById('downloadPDF');
-        pdfLink.setAttribute('href',URL.createObjectURL(blob));
-        console.log(pdfLink.getAttribute("href"));
-        if(isiOS){
-          newTab.location.href = pdfLink.getAttribute("href");
-        } else {
-          pdfLink.click();
-        }
-      }
-    },
-    error => {
-      console.error(error);
-    });
+    },1000);
+
+
+    // this.generatePdfService.getPDFFromHTML(htmlString).subscribe(pdfFile => {
+    //
+    //   let blob = new Blob([pdfFile._body], {
+    //       type:'application/pdf'
+    //   });
+    //
+    //   if(navigator.msSaveBlob){
+    //     //Explorer
+    //     console.log('Explorer save blob');
+    //     navigator.msSaveBlob(blob,'contrato_xxx.pdf');
+    //   } else {
+    //     //Firefox / Chrome
+    //     var pdfLink = document.getElementById('downloadPDF');
+    //     pdfLink.setAttribute('href',URL.createObjectURL(blob));
+    //     console.log(pdfLink.getAttribute("href"));
+    //     if(isiOS){
+    //       newTab.location.href = pdfLink.getAttribute("href");
+    //     } else {
+    //       pdfLink.click();
+    //     }
+    //   }
+    // },
+    // error => {
+    //   console.error(error);
+    // });
 
   }
 
