@@ -25,6 +25,11 @@ html, body{
   ul,ol{
     padding-left: 20px!important;
   }
+  &.signers{
+    table{
+      display: inline-block;
+    }
+  }
 }
 .signerSpace {
   display: inline-block;
@@ -37,7 +42,7 @@ html, body{
   }
   .espacioFirma {
     // border-bottom: 1px solid #000;
-    height: 35px;
+    // height: 35px;
     position: relative;
   }
   hr{

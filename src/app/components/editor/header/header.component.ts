@@ -87,17 +87,13 @@ export class HeaderComponent implements OnInit {
                         }
                         .signers{
                           text-align:center;
+                          margin-left:40px;
                         }
                         .signerSpace{
                           width: 220px;
                         }
-                        .espacioFirma {
-                          height: 35px;
-                          position: relative;
-                          border:1px solid black;
-                        }
                         table{
-                          width:100%;
+                          width:500px;
                         }
                         table tr{
                           text-align: center;
@@ -115,57 +111,34 @@ export class HeaderComponent implements OnInit {
 
     htmlString = htmlString.replace(/(\r\n|\n|\r)/gm,"");
 
-    // console.log(htmlString);
+    console.log(htmlString);
 
-    setTimeout(()=>{
 
-      kendo.drawing.drawDOM($(".hoja"))
-      .then(function(group) {
-        // Render the result as a PDF file
-        return kendo.drawing.exportPDF(group, {
-          // paperSize: "auto",
-          paperSize: "auto",
-          multiPage:true,
-          margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
-        });
-      })
-      .done(function(data) {
-        // Save the PDF file
-        kendo.saveAs({
-          dataURI: data,
-          fileName: "pdf.pdf",
-          proxyURL: ""
-        });
+    this.generatePdfService.getPDFFromHTML(htmlString).subscribe(pdfFile => {
+
+      let blob = new Blob([pdfFile._body], {
+          type:'application/pdf'
       });
 
-    },1000);
-
-
-    // this.generatePdfService.getPDFFromHTML(htmlString).subscribe(pdfFile => {
-    //
-    //   let blob = new Blob([pdfFile._body], {
-    //       type:'application/pdf'
-    //   });
-    //
-    //   if(navigator.msSaveBlob){
-    //     //Explorer
-    //     console.log('Explorer save blob');
-    //     navigator.msSaveBlob(blob,'contrato_xxx.pdf');
-    //   } else {
-    //     //Firefox / Chrome
-    //     var pdfLink = document.getElementById('downloadPDF');
-    //     pdfLink.setAttribute('href',URL.createObjectURL(blob));
-    //     console.log(pdfLink.getAttribute("href"));
-    //     if(isiOS){
-    //       newTab.location.href = pdfLink.getAttribute("href");
-    //     } else {
-    //       pdfLink.click();
-    //     }
-    //   }
-    // },
-    // error => {
-    //   console.error(error);
-    // });
+      if(navigator.msSaveBlob){
+        //Explorer
+        console.log('Explorer save blob');
+        navigator.msSaveBlob(blob,'contrato_xxx.pdf');
+      } else {
+        //Firefox / Chrome
+        var pdfLink = document.getElementById('downloadPDF');
+        pdfLink.setAttribute('href',URL.createObjectURL(blob));
+        console.log(pdfLink.getAttribute("href"));
+        if(isiOS){
+          newTab.location.href = pdfLink.getAttribute("href");
+        } else {
+          pdfLink.click();
+        }
+      }
+    },
+    error => {
+      console.error(error);
+    });
 
   }
 

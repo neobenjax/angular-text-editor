@@ -16,11 +16,11 @@ export class EditableBlocksService {
 
   private loremText = {
     type:'lorem',
-    content:'Lorem ipsum <span style="font-size: 24px;">dolor sit amet</span>, <b>consectetur adipisicing elit</b>, sed do eiusmod tempor <i>incididunt</i> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est <em>laborum</em>.'
+    content:'<p>Lorem ipsum <span style="font-size: 24px;">dolor sit amet</span>, <b>consectetur adipisicing elit</b>, sed do eiusmod tempor <i>incididunt</i> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est <em>laborum</em>.<p>'
   };
   private space = {
     type:'space',
-    content:'<p>&nbsp</p>'
+    content:'<p>&nbsp;</p>'
   };
 
   public minHeightBlock: number;
@@ -55,7 +55,7 @@ export class EditableBlocksService {
       case 'signers':
         let byRow = 0;
         placeholderElement.type = 'signers';
-        placeholderElement.content = '<table style="width: 100%;">';
+        placeholderElement.content = '<table align="center">';
         for( let i = 0, n = this.docVarsService.signersToDoc.length; i < n; i++ ){
           let signer = this.docVarsService.signersToDoc[i];
           if(byRow === 0)
@@ -63,7 +63,9 @@ export class EditableBlocksService {
           placeholderElement.content += `
             <td>
               <div class="signerSpace signer_${signer.id}" data-id="${signer.id}">
-                <p class="espacioFirma"></p>
+                <p class="espacioFirma" style="margin-bottom:20px;">
+                  &nbsp;
+                </p>
                 <hr />
                 <p class="nombreFirmante">${signer.alias}</p>
               </div>
@@ -79,11 +81,11 @@ export class EditableBlocksService {
       case 'header':
         placeholderElement.type = 'header';
         placeholderElement.content =
-          `En __________________, siendo los __ días del mes de __________ de _____, se celebra el presente
+          `<p>En __________________, siendo los __ días del mes de __________ de _____, se celebra el presente
           Contrato de Compraventa entre __________________________, como Vendedor, y
           __________________________, como Comprador, respecto del inmueble que se describe a
           continuación, de conformidad con lo siguiente:
-          `
+          </p>`
     }
     // placeholderElement = this.sanitizer.bypassSecurityTrustHtml(placeholderElement).toString();
     this.editableBlocks[sheet].push(placeholderElement);
